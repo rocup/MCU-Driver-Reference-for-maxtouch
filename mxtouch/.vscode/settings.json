@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "atmel_mxt_ts.h": "c"
+    }
+}

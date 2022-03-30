@@ -15,6 +15,7 @@
  *************************************************************************************/
 #include <stdint.h>         /* used for the types definition */
 #include "hal_ext_irq.h"    /* used for interrupt callback function */
+#include "hal_atomic.h"     /* used for lock for sequence number operation in security mode */
 
 // some types definition
 typedef uint8_t u8;
@@ -37,8 +38,6 @@ int mxt_wait_for_completion(u8 *completion, unsigned int timeout_ms);
 int mxt_bootloader_read(u8 i2c_addr, u8 *val, unsigned int count);
 int mxt_bootloader_write(u8 i2c_addr, const u8 * const val, unsigned int count);
 
-int mxt_read_reg(u8 i2c_addr, u16 reg, u16 len, void *val);
-int mxt_write_reg(u8 i2c_addr, u16 reg, u16 len, void *val);
 // irq handler 
 bool check_low_level_trigger(void);
 void register_mxt_irq(unsigned int *irq, ext_irq_cb_t mxt_interrupt);
@@ -58,6 +57,9 @@ extern void dev_info(const char *fmt, ...);
 #define dev_err dev_info
 #define dev_warn dev_info
 
-extern u8 file_cfg_data[];
+extern uint8_t file_device_info[];
+extern uint32_t file_block_info_crc;
+extern uint32_t file_cfg_crc;
+extern uint8_t file_cfg_data[];
 
 #endif /*__MCU_INTERFACE_H*/
